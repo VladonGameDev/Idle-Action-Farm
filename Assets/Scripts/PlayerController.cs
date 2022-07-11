@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private DynamicJoystick joystick;
     private Transform playerTransform;
+    public bool isHit = false;
     public float playerSpeed;
     void Awake()
     {
@@ -17,16 +18,17 @@ public class PlayerController : MonoBehaviour
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        //float horizontal = Input.GetAxisRaw("Horizontal");
-        //float vertical = Input.GetAxisRaw("Vertical");
-
         float horizontal = joystick.Horizontal;
         float vertical = joystick.Vertical;
 
         Vector3 direction = new Vector3(horizontal, 0f, vertical);
-        if (direction.magnitude >= 0.1f)
+        if(isHit == true)
+        {
+            HitAnim();
+        }
+        else if (direction.magnitude >= 0.1f)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             playerTransform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
@@ -45,10 +47,19 @@ public class PlayerController : MonoBehaviour
     {
         animator.SetBool("Walking", true);
         animator.SetBool("Idle", false);
+        animator.SetBool("Hit", false);
     }
     private void IdleAnim()
     {
-        animator.SetBool("Walking", false);
         animator.SetBool("Idle", true);
+        animator.SetBool("Walking", false);
+        animator.SetBool("Hit", false);
+    }
+
+    private void HitAnim()
+    {
+        animator.SetBool("Hit", true);
+        animator.SetBool("Walking", false);
+        animator.SetBool("Idle", false);
     }
 }
