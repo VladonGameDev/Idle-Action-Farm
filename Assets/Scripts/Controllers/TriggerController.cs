@@ -10,8 +10,8 @@ public class TriggerController : MonoBehaviour
     private void Awake()
     {
         sliceController = GameObject.Find("Slice").GetComponent<SliceController>();
-        playerController = GameObject.Find("Character").GetComponent<PlayerController>();
-        inventoryController = GameObject.Find("Inventory").GetComponent<InventoryController>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        inventoryController = GameObject.FindGameObjectWithTag("Player").GetComponent<InventoryController>();
     }
     public void OnTriggerEnter(Collider other)
     {

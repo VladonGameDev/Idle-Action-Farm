@@ -8,11 +8,10 @@ public class InterfaceController : MonoBehaviour
 {
     [SerializeField]
     private Settings settings;
+    private int totalMoney;
 
     private TextMeshProUGUI moneyText;
     private TextMeshProUGUI inventoryText;
-
-    public RectTransform coin;
 
     private void Awake()
     {
@@ -28,15 +27,16 @@ public class InterfaceController : MonoBehaviour
         {
 
             moneyText.text = "Money: " + i;
-            if(i<money)
+            if(i < money)
             {
                 i++;
             }
             else
             {
                 StopAllCoroutines();
+                totalMoney += i;
             }
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.02f);
         }
     }
     public void InventoryUpdate(int countWheat)
@@ -46,7 +46,6 @@ public class InterfaceController : MonoBehaviour
 
     public void MoneyUpdate(int money)
     {
-        int i = 0;
-        StartCoroutine(MoneyUp(money, i));
+        StartCoroutine(MoneyUp(money, totalMoney));
     }
 }

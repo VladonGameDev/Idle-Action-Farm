@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 public class InventoryController : MonoBehaviour
 {
@@ -11,7 +9,7 @@ public class InventoryController : MonoBehaviour
     private int money;
     private void Awake()
     {
-        interfaceController = GameObject.Find("UI").GetComponent<InterfaceController>();
+        interfaceController = GameObject.Find("Canvas").GetComponent<InterfaceController>();
         money = 0;
     }
     public void AddBlockToInventory()

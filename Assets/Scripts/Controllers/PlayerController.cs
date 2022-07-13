@@ -14,10 +14,15 @@ public class PlayerController : MonoBehaviour
     public GameObject scythe;
     private void Awake()
     {
-        characterController = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
-        playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         joystick = GameObject.Find("Dynamic Joystick").GetComponent<DynamicJoystick>();
+        characterController = gameObject.GetComponent<CharacterController>();
+        playerTransform = gameObject.GetComponent<Transform>();
         animController = gameObject.GetComponent<AnimController>();
+    }
+
+    private void Start()
+    {
+        joystick.MoveThreshold = 0;
     }
 
     void FixedUpdate()
@@ -33,6 +38,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (direction.magnitude >= 0.1f)
         {
+            joystick.MoveThreshold = 999;
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             playerTransform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
             characterController.Move(settings.PlayerSpeed * direction * Time.deltaTime);
